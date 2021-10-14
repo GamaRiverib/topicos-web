@@ -1,5 +1,18 @@
 const express = require("express");
 
+const winston = require("winston");
+
+// "silly" | "input" | "verbose" | "prompt" | "debug" | "info" | "data" | "help" | "warn" | "error";
+const logger = winston.createLogger({
+  level: "warn",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({
+      filename: "logs.txt"
+    })
+  ]
+});
+
 const app = express();
 
 app.use(express.json());
@@ -23,17 +36,17 @@ app.delete("/", (req, res) => {
 });
 
 const sayHello = (req, res, next) => {
-  console.log("sayHello");
+  logger.info("sayHello");
   next();
 };
 
 const decirHola = (req, res, next) => {
-  console.log("decirHola");
+  logger.debug("decirHola");
   next();
 }
 
 app.get("/hola", decirHola, sayHello, (req, res) => {
-  console.log("good bye");
+  logger.warn("good bye");
   res.send("Done");
 });
 
@@ -43,16 +56,31 @@ app.get("/hola/:nombre", (req, res, next) => {
 });
 
 app.post("/alumno", (req, res, next) => {
-  console.log(req.body);
-  console.log(req.query);
+  logger.debug(req.body);
+  logger.debug(req.query);
+  const age = parseInt(req.query.age);
+  logger.debug(age);
+  if (Number.isNaN(age)) {
+    throw new Error('Age invalid value');
+  }
   // Almacenar DB
   const data = req.body;
+  data.age = age;
   data.id = Math.random() * 10;
   res.json(data);
 });
 
 app.get("/ejemplo", (req, res, next) => {
   res.redirect("/hola");
+});
+
+app.use((error, req, res, next) => {
+  console.log("Ocurrió un error");
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(400).json({ error });
 });
 
 app.listen(3000, (err) => {
