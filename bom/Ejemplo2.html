@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='es'>
+ <head>
+  <title>Tópicos WEB - DOM</title>
+  <meta charset='utf-8'>
+ </head>
+ <body>
+   <div id="container">
+     <form>
+       <input type="text" />
+       <input type="button" value="Agregar">
+     </form>
+     <h1>Lista de Tareas:</h1>
+     <ul id="list">
+     </ul>
+   </div>
+ </body>
+ <script>
+
+   const tareas = [
+     "Tarea 1",
+     "Tarea 2",
+     "Tarea 3",
+     "Tarea 4",
+     "Tarea 5"
+   ];
+
+
+    window.onload = function() {
+      const list = document.getElementById("list");
+      tareas.forEach(function(value, index, arr) {
+        const li = document.createElement("li");
+        const textoTarea = document.createTextNode(value);
+        li.appendChild(textoTarea);
+        list.appendChild(li);
+      });
+    };
+ </script>
+</html>

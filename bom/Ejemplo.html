@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='es'>
+ <head>
+  <title>Tópicos WEB - BOM</title>
+  <meta charset='utf-8'>
+ </head>
+ <body>
+   <div id="container"></div>
+ </body>
+ <script>
+
+  function mostrarMensaje() {
+    alert("Hola curso temas emergentes de aplicaciones Web");
+  }
+
+  function escribirHola() {
+    const container = document.getElementById("container");
+    container.innerHTML += "<p>¡Hola amigo!</p>";
+  }
+
+  window.onload = function() {
+    // setTimeout(mostrarMensaje, 2000);
+    // setInterval(escribirHola, 1000);
+    const container = document.getElementById("container");
+    const el = document.createElement("p");
+    el.innerHTML = "!Hola amigo¡";
+    container.appendChild(el);
+
+    console.log(navigator);
+
+    console.log("window", window.height, window.width);
+    console.log("screen", screen.height, screen.width);
+
+    /*setTimeout(() => {
+      location.replace("http://www.itson.mx");
+    }, 3000);*/
+  };
+ </script>
+</html>
