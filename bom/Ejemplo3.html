@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='es'>
+ <head>
+  <title>Tópicos WEB - DOM</title>
+  <meta charset='utf-8'>
+ </head>
+ <body>
+   <div id="container">
+     <table id="taskList" border="1">
+       <tr>
+         <th>Tarea</th>
+         <th>Estatus</th>
+         <th>Acciones</th>
+       </tr>
+     </table>
+     <br>
+     <input type="text" />
+     <select>
+       <option value="P">Pendiente</option>
+       <option value="W">En progreso</option>
+       <option value="T">Terminada</option>
+     </select>
+     <input type="button" value="Agregar" />
+   </div>
+ </body>
+ <script>
+    window.onload = function() {
+      const table = document.getElementById('taskList');
+      const inputTask = document.querySelector('input[type="text"]');
+      const button = document.querySelector('input[type="button"]');
+      const statusList = document.querySelector('select');
+      button.onclick = () => {
+        const text = inputTask.value;
+        const statusIndex = statusList.selectedIndex;
+        const row = table.insertRow();
+        const cell1 = row.insertCell();
+        const cell2 = row.insertCell();
+        const cell3 = row.insertCell();
+        cell1.innerHTML = text;
+        cell2.innerHTML = statusList.options[statusIndex].text;
+        cell3.innerHTML = "<a>Borrar</a>";
+        cell3.onclick = () => {
+          table.deleteRow(row.rowIndex);
+        };
+        inputTask.value = "";
+      };
+    };
+ </script>
+</html>
