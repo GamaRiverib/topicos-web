@@ -24,26 +24,66 @@
    </div>
  </body>
  <script>
-    window.onload = function() {
-      const table = document.getElementById('taskList');
-      const inputTask = document.querySelector('input[type="text"]');
-      const button = document.querySelector('input[type="button"]');
-      const statusList = document.querySelector('select');
-      button.onclick = () => {
-        const text = inputTask.value;
-        const statusIndex = statusList.selectedIndex;
-        const row = table.insertRow();
-        const cell1 = row.insertCell();
-        const cell2 = row.insertCell();
-        const cell3 = row.insertCell();
-        cell1.innerHTML = text;
-        cell2.innerHTML = statusList.options[statusIndex].text;
-        cell3.innerHTML = "<a>Borrar</a>";
-        cell3.onclick = () => {
-          table.deleteRow(row.rowIndex);
-        };
-        inputTask.value = "";
+
+   function agregarTarea(name, status) {
+    const table = document.getElementById('taskList');
+    const row = table.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    cell1.innerHTML = name;
+    cell2.innerHTML = status;
+    cell3.innerHTML = "<a>Borrar</a>";
+    cell3.onclick = () => {
+      // TODO: await deleteTarea(row.rowIndex);
+      // table.deleteRow(row.rowIndex);
+    };
+   }
+
+   function deleteTarea(index) {
+
+   }
+
+    function getTareas() {
+      const xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = () => {
+        if(xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          const {tareas} = JSON.parse(xmlHttp.responseText);
+          console.log(tareas);
+          tareas.forEach(t => agregarTarea(t.name, t.status));
+        }
       };
+      xmlHttp.open("GET", "http://localhost:3000");
+      xmlHttp.send();
+    }
+
+    function postTarea() {
+      const inputTask = document.querySelector('input[type="text"]');
+      const statusList = document.querySelector('select');
+      const name = inputTask.value;
+      const statusIndex = statusList.selectedIndex;
+      const status = statusList.options[statusIndex].text
+      
+      // TODO: POST 
+
+      const row = table.insertRow();
+      const cell1 = row.insertCell();
+      const cell2 = row.insertCell();
+      const cell3 = row.insertCell();
+      cell1.innerHTML = name;
+      cell2.innerHTML = status;
+      cell3.innerHTML = "<a>Borrar</a>";
+      cell3.onclick = () => {
+        // TODO: await deleteTarea(row.rowIndex);
+        // table.deleteRow(row.rowIndex);
+      };
+      inputTask.value = "";
+    }
+
+    window.onload = function() {
+      const button = document.querySelector('input[type="button"]');      
+      button.onclick = postTareas;
+      getTareas();
     };
  </script>
 </html>
