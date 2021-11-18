@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css">
+    <title>Tópicos Web - Chat</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="inbox">
+        <div class="people">
+          <h4>Usuarios</h4>
+        </div>
+        <div class="messages">
+          <h4>Mensajes</h4>
+          <div class="history"></div>
+          <div class="fallback"></div>
+        </div>
+      </div>
+
+      <div>
+        <form class="message_form">
+          <input type="text" class="message_form__input" placeholder="Type a message" />
+          <button class="message_form__button" type="submit">
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
